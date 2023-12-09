@@ -36,7 +36,6 @@ export default {
   name: "Login",
   data() {
     return {
-
       loginRules: {
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
@@ -57,8 +56,8 @@ export default {
         }]
       },
       loginForm: {
-        mobile: '13800000002',
-        password: 'hm#qd@23!',
+        mobile: process.env.NODE_ENV === 'development' ? '13800000002' : '',
+        password: process.env.NODE_ENV === 'development' ? 'hm#qd@23!' : '',
         isAgree: true
       }
     }
@@ -72,13 +71,22 @@ export default {
             type: 'error'
           });
         } else {
-          console.log(this);
           const res = await login(this.loginForm)
-          this.$store.dispatch('user/login', res)
+
+          this.$store.dispatch('user/login', res);
+          this.$message({
+            message: '登陆成功',
+            type: 'success'
+          });
+
+          this.$router.push({ path: this.$store.getters.redirect });
         }
       })
     }
+  },
+  mounted() {
 
+    this.$store.dispatch('user/getRedirect', this.$route.query.redirect || '/')
   }
 }
 </script>
