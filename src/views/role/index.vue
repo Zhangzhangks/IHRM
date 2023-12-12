@@ -40,7 +40,7 @@
         <el-form-item prop="name" label="角色名称">
           <el-input v-model="roleForm.name" style="width:300px" size="mini" />
         </el-form-item>
-        <el-form-item label="启用">
+        <el-form-item label="启用" prop="state">
           <!-- 如果不需要校验 就不需要写 prop属性 -->
           <el-switch v-model="roleForm.state" :active-value="1" :inactive-value="0" size="mini" />
         </el-form-item>
