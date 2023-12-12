@@ -29,10 +29,9 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-
   devServer: {
     port: port,
-    open: false,
+    open: true,
     overlay: {
       warnings: false,
       errors: true
@@ -41,8 +40,7 @@ module.exports = {
       '/api': {
         target: 'https://heimahr.itheima.net'
       }
-    },
-    // before: require('./mock/mock-server.js')
+    }
     // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
@@ -53,7 +51,13 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    // // 配置需要排出的包
+    // externals: {
+    //   'vue': 'Vue',
+    //   'element-ui': 'ELEMENT',
+    //   'cos-js-sdk-v5': 'COS'
+    // }
   },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload

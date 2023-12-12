@@ -6,13 +6,10 @@ import "nprogress/nprogress.css"; // progress bar style
 import { getToken } from "@/utils/auth"; // get token from cookie
 import getPageTitle from "@/utils/get-page-title";
 
-
 NProgress.configure({ showSpinner: false })//不显示圈圈
-
 
 const whiteList = ["/login", '/404'];
 router.beforeEach(async (to, from, next) => {
-
   NProgress.start();
   if (store.getters.token) {
     if (to.path === '/login' && store.getters.userId) {
