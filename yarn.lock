@@ -3552,7 +3552,7 @@
   "resolved" "https://registry.npmmirror.com/core-util-is/-/core-util-is-1.0.2.tgz"
   "version" "1.0.2"
 
-"cos-js-sdk-v5@^1.4.15":
+"cos-js-sdk-v5@^1.4.22":
   "integrity" "sha512-WpVzFLZSbjWH4UorXLYkOLT2KoLaeQksEiDXnrO7KPm2ylMr1flWqCHmKoocgCCl8/Ml9Elhp9VXjh3xf5EbxA=="
   "resolved" "https://registry.npmmirror.com/cos-js-sdk-v5/-/cos-js-sdk-v5-1.4.22.tgz"
   "version" "1.4.22"
