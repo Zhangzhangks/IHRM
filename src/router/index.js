@@ -62,6 +62,11 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+
+  // 404 page must be placed at the end !!!
+
+]
+export const dynamicRouter = [
   departmentRouter,
   roleRouter,
   employeeRouter,
@@ -70,10 +75,7 @@ export const constantRoutes = [
   approvalRouter,
   salaryRouter,
   socialRouter,
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
 ]
-
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
@@ -85,6 +87,7 @@ const router = createRouter()
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
+  console.log(newRouter, 'reset');
   router.matcher = newRouter.matcher // reset router
 }
 

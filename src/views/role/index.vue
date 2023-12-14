@@ -100,7 +100,7 @@
         <el-row slot="footer" type="flex" justify="center">
           <el-col :span="6">
             <el-button type="primary" size="mini" @click="btnPermissionOK">确定</el-button>
-            <el-button size="mini" @click="showPermissionDialog = false">取消</el-button>
+            <el-button size="mini" @click="showPermissionDialog = false, defaultSelect = []">取消</el-button>
           </el-col>
         </el-row>
 
@@ -190,8 +190,10 @@ export default {
       if (row.editRow.name.length > 0 && row.editRow.description.length > 0) {
         await updateRole({ ...row.editRow, id: row.id });
         this.$message.success('修改成功')
+        // 不用这个方法
         // this.getRoleList()
         // row.isEdit = false
+        // 利用object.assign()方法
         Object.assign(row, {
           ...row.editRow,
           isEdit: false // 退出编辑模式
@@ -211,14 +213,13 @@ export default {
       this.$message.success('删除成功')
       this.getRoleList()
     },
+    // 分配权限
     async btnPermission(row) {
       this.currentRoleId = row.id
-
       this.permissionData = transListToTreeData(await getPermissionList(), 0)
-
       const { permIds } = await getRoleDetail(this.currentRoleId)
       this.defaultSelect = permIds
-      console.log(permIds, this.currentRoleId, this.defaultSelect);
+      // console.log(permIds, this.currentRoleId,);
       this.showPermissionDialog = true
     },
     // 角色分配确定
@@ -230,6 +231,7 @@ export default {
       })
       this.$message.success('角色分配权限成功')
       this.showPermissionDialog = false
+      this.defaultSelect = []
     }
   }
 }

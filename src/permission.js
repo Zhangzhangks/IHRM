@@ -3,32 +3,43 @@ import store from "./store";
 import { Message } from "element-ui";
 import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
-import { getToken } from "@/utils/auth"; // get token from cookie
-import getPageTitle from "@/utils/get-page-title";
 
+import { dynamicRouter } from "./router";
 NProgress.configure({ showSpinner: false })//不显示圈圈
 
 const whiteList = ["/login", '/404'];
 router.beforeEach(async (to, from, next) => {
+
   NProgress.start();
   if (store.getters.token) {
-    if (to.path === '/login' && store.getters.userId) {
+    if (to.path === '/login') {
       next('/');
-      NProgress.done();
     } else {
+      next()
+
       if (!store.getters.userId) {
-        await store.dispatch('user/getUserInfo')
+        const { roles } = await store.dispatch('user/getUserInfo') // 拉取用户信息，动态添加路由到 store
+        const filterRouter = dynamicRouter.filter(item => {
+          return roles.menus.includes(item.name)
+        })
+        // console.log(roles);
+        // console.log(filterRouter);
+        store.commit('user/setRouter', filterRouter)
+        router.addRoutes([...filterRouter, { path: '*', redirect: '/404', hidden: true }])
+        next(to.path,)
+
       }
-      next();
     }
   }
   else {
-    if (!whiteList.includes(to.path)) {
-      next('/login?redirect=' + to.path);
-    } else {
+    if (whiteList.indexOf(to.path) !== -1) {
       next();
+    } else {
+      next(`/login?redirect=${to.path}`);
+      NProgress.done();
     }
   }
+
 })
 
 router.afterEach(() => {

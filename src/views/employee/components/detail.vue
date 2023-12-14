@@ -26,7 +26,7 @@
                         <el-col :span="12">
                             <el-form-item label="手机" prop="mobile">
                                 <el-input v-model="userInfo.mobile" size="mini" class="inputW"
-                                    :disabled="userInfo.departmentId ? true : false" />
+                                    :disabled="$router.params?.id ? true : false" />
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -139,7 +139,7 @@ export default {
         saveData() {
             this.$refs.userForm.validate(async (result) => {
                 if (result) {
-                    if (this.userInfo.departmentId) {
+                    if (this.$route.params.id) {
                         await updateEmployee(this.userInfo);
                         this.$message.success('更新员工成功')
                     } else {

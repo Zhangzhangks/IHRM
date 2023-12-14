@@ -6,5 +6,6 @@ const getters = {
   name: state => state.user.userInfo?.username,
   userId: state => state.user.userInfo?.userId,
   redirect: state => state.user.redirect,
+  routes: state => state.user.routes,
 }
 export default getters
